@@ -88,6 +88,7 @@ public class BasePage {
         waitUntilLoaderMaskDisappear();
 
         BrowserUtils.clickWithWait(module); //if click is not working well
+        BrowserUtils.waitForVisibility(module,3);
         WebElement subModule = Driver.get().findElement(By.xpath(subModuleLocator));
         if (!subModule.isDisplayed()) {
             actions.doubleClick(module).doubleClick().build().perform();
@@ -98,6 +99,7 @@ public class BasePage {
                 BrowserUtils.clickWithJS(module);
             }
         }
+        BrowserUtils.wait(3);
         BrowserUtils.clickWithWait(subModule); //if click is not working well
         //it waits until page is loaded and ajax calls are done
         BrowserUtils.waitForPageToLoad(10);

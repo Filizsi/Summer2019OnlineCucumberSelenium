@@ -1,5 +1,6 @@
 package com.vytrack.pages;
 
+import com.vytrack.utilities.ConfigurationReader;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,6 +45,37 @@ public class LoginPage extends BasePage{
         //Keys.ENTER to replace login click
         passwordInput.sendKeys(password, Keys.ENTER);
 
+    }
+
+    public void login(){
+        login(ConfigurationReader.getProperty("driverUsername"),ConfigurationReader.getProperty("password"));
+    }
+
+    public void login(String role){
+//        if(role.equals("driver")){
+//            login(ConfigurationReader.getProperty("driverUsername"),ConfigurationReader.getProperty("password"));
+//        }else if(role.equals("store.manager")){
+//            login(ConfigurationReader.getProperty("storeManagerUsername"),ConfigurationReader.getProperty("password"));
+//        }else if(role.equals("sales.manager")){
+//            login(ConfigurationReader.getProperty("salesManagerUsername"),ConfigurationReader.getProperty("password"));
+//        }
+
+        String userName="";
+        String password=ConfigurationReader.getProperty("password");
+        switch(role){
+            case "driver":
+                userName=ConfigurationReader.getProperty("driverUsername");
+                break;
+            case "store manager":
+                userName=ConfigurationReader.getProperty("storeManagerUsername");
+                break;
+            case "sales manager"  :
+                userName=ConfigurationReader.getProperty("salesManagerUsername");
+                break;
+            default:
+                throw new RuntimeException("Invalid role");
+        }
+        login(userName,password);
     }
 
 

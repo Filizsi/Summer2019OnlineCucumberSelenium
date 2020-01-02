@@ -9,13 +9,13 @@ import com.vytrack.utilities.Driver;
 
 public class CreateCarPage extends BasePage{
 
-    @FindBy(name="custom_entity_type[LicensePlate]")
+    @FindBy(css = "[id*='custom_entity_type_LicensePlate']")
     public WebElement licensePlateElement;
 
     @FindBy(name = "custom_entity_type[Driver]")
     public WebElement driverElement;
 
-    @FindBy(css="[name='custom_entity_type[Location]']")
+    @FindBy(name = "custom_entity_type[Location]")
     public WebElement locationElement;
 
     @FindBy(css = "[class='btn btn-success action-button']")
@@ -37,6 +37,36 @@ public class CreateCarPage extends BasePage{
     @FindBy(css="[title='Create Car']")
     public WebElement createCarButton;
 
+    @FindBy(xpath = "//li//button[contains(text(),'Save and New')]")
+    public WebElement saveAndNew;
+
+    @FindBy(css = "div[class='btn-group pull-right'] > a[data-toggle='dropdown']")
+    public WebElement saveASndCloseToggle;
+
+    @FindBy(xpath = "//li//button[contains(text(),'Save and Close')]")
+    public WebElement saveAndCloseButtonFromMenuElement;
+
+
+
+
+
+    public void clickSaveAndAddNew(){
+        waitUntilLoaderMaskDisappear();
+        BrowserUtils.wait(3);
+        BrowserUtils.clickWithWait(saveASndCloseToggle);
+        BrowserUtils.wait(3);
+        BrowserUtils.waitForVisibility(saveAndNew,5);
+        BrowserUtils.clickWithWait(saveAndNew);
+
+    }
+
+    public void clickSaveAndClose(){
+        waitUntilLoaderMaskDisappear();
+        BrowserUtils.clickWithWait(saveASndCloseToggle);
+        BrowserUtils.waitForVisibility(saveAndCloseButtonFromMenuElement, 5);
+        BrowserUtils.clickWithWait(saveAndCloseButtonFromMenuElement);
+    }
+
     public void uploadLogo(String pathToTheFile){
        logoElement.sendKeys(pathToTheFile);
     }
@@ -51,6 +81,10 @@ public class CreateCarPage extends BasePage{
      *  to select gasoline type
      *  createCarPage.selectFuelType("Diesel"); - if you want to select Diesel as fuel type
      */
+
+
+
+
 
     public void selectFuelType(String fuelType){
         String locator="//div[@class='select2-result-label' and text()='"+fuelType+"']";
@@ -90,6 +124,9 @@ public class CreateCarPage extends BasePage{
         }
         return checkBox;
     }
+
+
+
 
 
 

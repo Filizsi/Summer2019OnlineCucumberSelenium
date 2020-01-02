@@ -24,7 +24,7 @@ public class LoginStepDefinitions {
     public void user_logs_in_as_store_manager() {
 //        System.out.println("login as storemanager");
         //we read username and password from properties file
-        String username=ConfigurationReader.getProperty("user_name");
+        String username=ConfigurationReader.getProperty("username");
         String password=ConfigurationReader.getProperty("password");
         loginPage.login(username,password);
 
@@ -42,21 +42,24 @@ public class LoginStepDefinitions {
 
     @Then("user logs in as driver")
     public void user_logs_in_as_driver() {
+
         System.out.println("login as driver");
     }
 
     @Then("user logs in as sales manager")
     public void user_logs_in_as_sales_manager() {
+
         System.out.println("login as sales manager");
     }
     @Then("user enters {string} username and {string}Password")
-    public void user_enters_username_and_Password(String string, String string2) {
-        System.out.println("login with "+string+" as username and "+string2+" as password ");
+    public void user_enters_username_and_Password(String username, String password) {
+        loginPage.login(username,password);
     }
 
     @Then("user verifies that {string}message is displayed")
     public void user_verifies_that_message_is_dsiplayed(String string) {
         System.out.println("verified that warning message is displayed as "+string);
+
 
     }
     //    Then user logs in as driver with following credentials
@@ -71,7 +74,14 @@ public class LoginStepDefinitions {
     }
 
 
+    @Then("user login as {string}")
+    public void userLoginAs(String role) {
+        loginPage.login(role);
+    }
 
-
-
+    @Then("the page title should be {string}")
+    public void thePageTitleShouldBe(String expected) {
+        String actual=Driver.get().getTitle();
+        Assert.assertEquals(expected,actual);
+    }
 }
