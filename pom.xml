@@ -76,7 +76,7 @@
                         </goals>
                         <configuration>
                             <projectName>Cucumber HTML Reports</projectName>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/regression</outputDirectory>
                             <inputDirectory>${project.build.directory}</inputDirectory>
                             <jsonFiles>
                                 <param>**/cucumber*.json</param>
@@ -87,7 +87,32 @@
             </plugin>
         </plugins>
     </build>
+<profiles>
+    <profile>
+        <id>Regression</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                    <configuration>
 
+                        <parallel>methods</parallel>
+                        <perCoreThreadCount>false</perCoreThreadCount>
+                        <threadCountMethods>2</threadCountMethods>
+
+                        <runOrder>Alphabetical</runOrder>
+                        <includes>
+                            <include>**/RegressionRunner.java</include>
+                        </includes>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+</profiles>
 
 
 </project>
